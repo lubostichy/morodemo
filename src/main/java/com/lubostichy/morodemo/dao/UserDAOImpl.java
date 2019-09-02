@@ -37,4 +37,19 @@ public class UserDAOImpl implements UserDAO {
 		return user;
 	}
 
+	@Override
+	public void save(User user) {
+		Session currentSession = entityManager.unwrap(Session.class);
+		
+		currentSession.saveOrUpdate(user);
+	}
+
+	@Override
+	public void deleteById(int id) {
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query query = currentSession.createQuery("delete from User where id=:userId")
+				.setParameter("userId", id);
+		query.executeUpdate();
+		
+	}
 }

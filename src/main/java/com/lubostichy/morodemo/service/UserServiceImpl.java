@@ -11,25 +11,37 @@ import com.lubostichy.morodemo.entity.User;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
-	private UserDAO userDao;
-	
-	public UserServiceImpl(@Qualifier("userDAOImpl") UserDAO userDAO) {
-		this.userDao = userDAO;
+
+	private final UserDAO userDAO;
+
+	public UserServiceImpl(@Qualifier("userDAOImpl") final UserDAO userDAO) {
+		this.userDAO = userDAO;
 	}
 
 	@Override
 	@Transactional
 	public List<User> findAll() {
-		return userDao.findAll();
+		return userDAO.findAll();
 	}
-	
+
 	@Override
 	@Transactional
 	public User getUserId(int id) {
-		return this.userDao.getUserById(id);
+		return userDAO.getUserById(id);
 	}
 
-	
+	@Override
+	@Transactional
+	public void save(User user) {
+		userDAO.save(user);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteById(int id) {
+		userDAO.deleteById(id);
+		
+	}
 
 }
