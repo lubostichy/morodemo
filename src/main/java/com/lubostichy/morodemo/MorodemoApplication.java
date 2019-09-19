@@ -9,4 +9,5 @@ public class MorodemoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MorodemoApplication.class, args);
 	}
+	
 }

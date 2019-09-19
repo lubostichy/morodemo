@@ -3,7 +3,6 @@ package com.lubostichy.morodemo.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class UserRestController {
 	}
 
 	@GetMapping("/users/{userId}")
-	public User getUser(@PathVariable final int userId) {
+	public User getUser(@PathVariable int userId) {
 		return userService.getUserId(userId);
 	}
 
@@ -49,17 +48,6 @@ public class UserRestController {
 		return user;
 	}
 
-	@DeleteMapping("/users/{userId}")
-	public String deleteUser(@PathVariable int userId) {
-		User user = userService.getUserId(userId);
-
-		if (user == null) {
-			throw new RuntimeException("User id not found - " + userId);
-		}
-
-		userService.deleteById(userId);
-		
-		return "User with id " + userId + " has been deleted";
-	}
+	
 
 }

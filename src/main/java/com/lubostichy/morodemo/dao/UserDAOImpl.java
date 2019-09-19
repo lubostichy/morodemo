@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +50,13 @@ public class UserDAOImpl implements UserDAO {
 				.setParameter("userId", id);
 		query.executeUpdate();
 		
+	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		Session currentSession = entityManager.unwrap(Session.class);
+		Query<User> query = currentSession.createQuery("from User where username=:username", User.class);
+		query.setParameter("username", username);
+		return query.uniqueResult();
 	}
 }

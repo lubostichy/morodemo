@@ -44,4 +44,10 @@ public class UserServiceImpl implements UserService {
 		
 	}
 
+	@Override
+	@Transactional 
+	public User getUserByUsername(String username) {
+		return userDAO.getUserByUsername(username);
+	}
+
 }
