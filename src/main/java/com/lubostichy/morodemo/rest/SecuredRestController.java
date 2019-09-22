@@ -36,10 +36,5 @@ public class SecuredRestController {
 		return "User with id " + userId + " has been deleted";
 	}
 
-	@GetMapping("/users")
-	public List<User> findAll() {
-		return userService.findAll();
-	}
-
 	
 }

@@ -24,7 +24,6 @@ public class User {
 	private String name;
 
 	@Column(name = "username")
-	@Size(min = 2, max = 30)
 	private String username;
 
 	@Column(name = "password")
@@ -84,7 +83,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + "]";
+		return "User [id=" + id + ", name=" + name + ", username=" + username + "]";
 	}
 
 }

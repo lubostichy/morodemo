@@ -24,7 +24,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> findAll() {
 		Session currentSession = entityManager.unwrap(Session.class);
-		Query<User> query = currentSession.createQuery("from User",User.class);
+		Query<User> query = currentSession.createQuery("from User order by id",User.class);
 		List<User> users = query.getResultList();
 		return users;
 	}
@@ -38,8 +38,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void save(User user) {
-		Session currentSession = entityManager.unwrap(Session.class);
-		
+		Session currentSession = entityManager.unwrap(Session.class);		
 		currentSession.saveOrUpdate(user);
 	}
 

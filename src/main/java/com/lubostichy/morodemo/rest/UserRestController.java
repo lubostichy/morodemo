@@ -3,6 +3,7 @@ package com.lubostichy.morodemo.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,12 +33,27 @@ public class UserRestController {
 
 	@GetMapping("/users/{userId}")
 	public User getUser(@PathVariable int userId) {
-		return userService.getUserId(userId);
+		User user = userService.getUserId(userId);
+		if (user == null) {
+			throw new RuntimeException("User id not found - " + userId);			
+		}
+		return user;
 	}
 
 	@PostMapping("/users")
 	public User addUser(@RequestBody User user) {
 		user.setId(0);
+		if (user.getUsername() == null) {
+			user.setUsername("x" + user.getName().toLowerCase());
+		}
+		if (user.getPassword() == null) {
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String hashedPassword = passwordEncoder.encode(user.getUsername());
+			user.setPassword(hashedPassword);
+		}
+		if (user.getRole() == null) {
+			user.setRole("ROLE_USER");
+		}
 		userService.save(user);
 		return user;
 	}
@@ -47,7 +63,5 @@ public class UserRestController {
 		userService.save(user);
 		return user;
 	}
-
-	
 
 }
