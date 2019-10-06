@@ -2,7 +2,6 @@ package com.lubostichy.morodemo.rest;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,31 +15,31 @@ import com.lubostichy.morodemo.entity.User;
 import com.lubostichy.morodemo.service.UserService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(value = "/api/users", consumes = "application/json", produces = "application/json")
 public class UserRestController {
 
 	private final UserService userService;
 
-	@Autowired
 	public UserRestController(final UserService userService) {
 		this.userService = userService;
 	}
 
-	@GetMapping("/users")
+	@GetMapping("/")
 	public List<User> findAll() {
 		return userService.findAll();
+
 	}
 
-	@GetMapping("/users/{userId}")
+	@GetMapping("/{userId}")
 	public User getUser(@PathVariable int userId) {
 		User user = userService.getUserId(userId);
 		if (user == null) {
-			throw new RuntimeException("User id not found - " + userId);			
+			throw new RuntimeException("User id not found - " + userId);
 		}
 		return user;
 	}
 
-	@PostMapping("/users")
+	@PostMapping("/")
 	public User addUser(@RequestBody User user) {
 		user.setId(0);
 		if (user.getUsername() == null) {
@@ -58,7 +57,7 @@ public class UserRestController {
 		return user;
 	}
 
-	@PutMapping("/users")
+	@PutMapping("/")
 	public User updateUser(@RequestBody User user) {
 		userService.save(user);
 		return user;

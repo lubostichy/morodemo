@@ -19,13 +19,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<User> findAll() {
 		return userDAO.findAll();
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public User getUserId(int id) {
 		return userDAO.getUserById(id);
 	}
@@ -34,18 +34,18 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void save(User user) {
 		userDAO.save(user);
-		
+
 	}
 
 	@Override
 	@Transactional
 	public void deleteById(int id) {
 		userDAO.deleteById(id);
-		
+
 	}
 
 	@Override
-	@Transactional 
+	@Transactional(readOnly = true)
 	public User getUserByUsername(String username) {
 		return userDAO.getUserByUsername(username);
 	}

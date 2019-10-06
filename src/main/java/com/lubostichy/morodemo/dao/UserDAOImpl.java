@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lubostichy.morodemo.entity.User;
@@ -16,7 +15,6 @@ public class UserDAOImpl implements UserDAO {
 	
 	private EntityManager entityManager;
 	
-	@Autowired
 	public UserDAOImpl(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
