@@ -2,7 +2,6 @@ package com.lubostichy.morodemo.rest;
 
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,34 +30,19 @@ public class UserRestController {
 	}
 
 	@GetMapping("/{userId}")
-	public User getUser(@PathVariable int userId) {
-		User user = userService.getUserId(userId);
-		if (user == null) {
-			throw new RuntimeException("User id not found - " + userId);
-		}
-		return user;
+	public User getUser(@PathVariable final int userId) {
+		return userService.getUserId(userId);
 	}
 
 	@PostMapping("/")
-	public User addUser(@RequestBody User user) {
+	public User addUser(@RequestBody final User user) {
 		user.setId(0);
-		if (user.getUsername() == null) {
-			user.setUsername("x" + user.getName().toLowerCase());
-		}
-		if (user.getPassword() == null) {
-			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			String hashedPassword = passwordEncoder.encode(user.getUsername());
-			user.setPassword(hashedPassword);
-		}
-		if (user.getRole() == null) {
-			user.setRole("ROLE_USER");
-		}
 		userService.save(user);
 		return user;
 	}
 
 	@PutMapping("/")
-	public User updateUser(@RequestBody User user) {
+	public User updateUser(@RequestBody final User user) {
 		userService.save(user);
 		return user;
 	}

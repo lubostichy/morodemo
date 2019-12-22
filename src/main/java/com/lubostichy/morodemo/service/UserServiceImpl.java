@@ -26,27 +26,35 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public User getUserId(int id) {
-		return userDAO.getUserById(id);
+	public User getUserId(final int id) {
+		final User user = userDAO.getUserById(id);
+		if (user == null) {
+			throw new RuntimeException(String.format("User id not found %d", id));
+		}
+		return user;
 	}
 
 	@Override
 	@Transactional
-	public void save(User user) {
+	public void save(final User user) {
 		userDAO.save(user);
 
 	}
 
 	@Override
 	@Transactional
-	public void deleteById(int id) {
+	public void deleteById(final int id) {
+		final User user = getUserId(id);
+		if (user == null) {
+			throw new RuntimeException(String.format("User id not found %d", id));
+		}
 		userDAO.deleteById(id);
 
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public User getUserByUsername(String username) {
+	public User getUserByUsername(final String username) {
 		return userDAO.getUserByUsername(username);
 	}
 

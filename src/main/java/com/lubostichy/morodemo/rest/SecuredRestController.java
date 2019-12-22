@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lubostichy.morodemo.entity.User;
 import com.lubostichy.morodemo.service.UserService;
 
 @RestController
@@ -19,15 +18,8 @@ public class SecuredRestController {
 	}
 
 	@DeleteMapping("/users/{userId}")
-	public String deleteUser(@PathVariable int userId) {
-		User user = userService.getUserId(userId);
-
-		if (user == null) {
-			throw new RuntimeException("User id not found - " + userId);
-		}
-
+	public String deleteUser(@PathVariable final int userId) {
 		userService.deleteById(userId);
-
 		return "User with id " + userId + " has been deleted";
 	}
 
